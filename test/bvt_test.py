@@ -2,6 +2,7 @@ from appium import webdriver
 import unittest
 import time
 from pytest_testconfig import config
+from appium.webdriver.common.appiumby import AppiumBy
 
 timeout = 30
 poll = 2
@@ -20,7 +21,6 @@ class IAppBVT(unittest.TestCase):
         desired_caps['noReset'] = config['desired_caps']['noReset']
 
         self.driver = webdriver.Remote(appium_server_url, desired_caps)
-        self.driver.implicitly_wait(5)
 
     def tearDown(self):
         self.driver.quit()
@@ -42,7 +42,7 @@ class IAppBVT(unittest.TestCase):
         while time.time() - start < time_out and elem is None:
             time.sleep(poll)
             try:
-                elem = self.driver.find_element_by_xpath(elem_xpath)
+                elem = self.driver.find_element(AppiumBy.XPATH,elem_xpath)
             except Exception:
                 print('by pass the element not found')
 
