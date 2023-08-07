@@ -20,14 +20,14 @@ class IAppBVT(unittest.TestCase):
         desired_caps['noReset'] = config['desired_caps']['noReset']
 
         self.driver = webdriver.Remote(appium_server_url, desired_caps)
+        self.driver.implicitly_wait(5)
 
     def tearDown(self):
         self.driver.quit()
 
     def test_bvt(self):
         print('BVT test is started!')
-        status = self.driver.find_element_by_xpath('//android.widget.Button[contains(@resource-id,"id/trackEventButton")]')
-        self.assertTrue(status, f'Check record_button result is {status}')
+        self.driver.find_element_by_xpath('//android.widget.Button[contains(@resource-id,"id/trackEventButton")]').click()
         print('Test finished!')
  
     # def test_bvt(self):
